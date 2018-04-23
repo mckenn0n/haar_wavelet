@@ -1,5 +1,6 @@
 # haar_wavelet
 
-A simple Haar Wavelet transform program.  
-I will continue to build this project and update the README as needed.  
+A simple Haar Wavelet transform program.   
 Requires Python 3  
+
+haar_two.py outputs binnary and text files that are stored in "data".
