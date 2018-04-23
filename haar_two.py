@@ -1,7 +1,11 @@
 import random
+from tqdm import tqdm
+import struct
+
 cof_removed = 0
 cof_number = 0
 diff = 0
+
 def reduce_haar(list_to_reduce, diff_list):
 	first = []
 	second = []
@@ -39,30 +43,39 @@ def restore_haar(list_to_restore, diff_list):
 	else:
 		return (restore_haar(new_list, diff_list))
 
-def remove_cof(diff_list):
+def remove_cof(diff_list, t):
 	global cof_removed
 	global cof_number
 	cof_number = len(diff_list)
-	thresh = 10
+	thresh = t
 	for i in range(round(len(diff_list)/2),len(diff_list)):
 		if diff_list[i] <= thresh and diff_list[i] >= -thresh:
 			diff_list[i] = 0.0
 			cof_removed += 1
 	return diff_list
 
-test_list = [float(random.randint(0, 100)) for x in range(262144)]#2^18
-# print(test_list)
-test = reduce_haar(test_list, [])
-test = list(test)
-test[1] = remove_cof(test[1]) 
-print('Result of reduction:', test)
-# if test[0][0] == sum(test_list)/len(test_list):
-val = restore_haar(test[0],test[1])
-for i in range(len(test_list)):
-	if test_list[i] != val[0][i]:
-		diff += 1
-diff_ave = (diff/len(test_list)) * 100
-cof_ave = ((cof_removed/cof_number)) * 100
-print('Result of restoration:', cof_removed, val[0][:10], test_list[:10],'\n%'+str(diff_ave)+' differnt\n% of cof diff =', cof_ave)
-# else:
-# 	print('Reduced list and average not the same.')
+for t in tqdm(range(0, 11)):
+	file1 = open('./data/haar'+str(t)+'.bin', 'wb') 
+	file2 = open('./data/haar'+str(t)+'.txt', 'w') 
+	test_list = [float(random.randint(0, 100)) for x in range(262144)]#2^18
+	# print(test_list)
+	test = reduce_haar(test_list, [])
+	test = list(test)
+	test[1] = remove_cof(test[1], t) 
+	# print('Result of reduction:', test)
+	val = restore_haar(test[0],test[1])
+	file2.write('Original\tReconstructed\tDifference\n')
+	for i in range(len(test_list)):
+		file2.write(str(test_list[i])+'\t'+str(val[0][i])+'\t')
+		file1.write(bytearray(struct.pack('f',val[0][i])))
+		if test_list[i] != val[0][i]:
+			diff += 1
+			file2.write('TRUE')
+		file2.write('\n')
+	diff_ave = (diff/len(test_list)) * 100
+	cof_ave = ((cof_removed/cof_number)) * 100
+	file2.write(str(cof_removed) +' out of ' + str(cof_number) + ' coefficients were removed -- %'+str(cof_ave)+'\nPercent error is %'+str(diff_ave))
+	print('Result of restoration:', cof_removed,'\n%'+str(diff_ave)+' differnt\n% of cof diff =', cof_ave)
+	cof_removed = 0
+	cof_number = 0
+	diff = 0
