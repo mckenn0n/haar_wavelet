@@ -54,29 +54,30 @@ def remove_cof(diff_list, t):
 			cof_removed += 1
 	return diff_list
 
-for t in tqdm(range(0, 21)):
-	file1 = open('./data/haar_1000_'+str(t)+'.bin', 'wb') 
-	file2 = open('./data/haar_1000_'+str(t)+'.txt', 'w') 
-	test_list = [float(random.randint(0, 1000)) for x in range(262144)]#2^18
-	# print(test_list)
-	test = reduce_haar(test_list, [])
-	test = list(test)
-	test[1] = remove_cof(test[1], t) 
-	# print('Result of reduction:', test[1])
-	for x in range(len(test[1])):
-		file1.write(bytearray(struct.pack('f',test[1][x])))
-	val = restore_haar(test[0],test[1])
-	file2.write('Original\tReconstructed\tDifference\n')
-	for i in range(len(test_list)):
-		file2.write(str(test_list[i])+'\t'+str(val[0][i])+'\t')
-		if test_list[i] != val[0][i]:
-			diff += 1
-			file2.write(str(abs(abs(test_list[i])-abs(val[0][i]))))
-		file2.write('\n')
-	diff_ave = (diff/len(test_list)) * 100
-	cof_ave = ((cof_removed/cof_number)) * 100
-	file2.write(str(cof_removed) +' out of ' + str(cof_number) + ' coefficients were removed -- '+str(cof_ave)+'%\nPercent error is '+str(diff_ave)+'%')
-	print('Result of restoration:', cof_removed,'\n%'+str(diff_ave)+' differnt\n% of cof diff =', cof_ave)
-	cof_removed = 0
-	cof_number = 0
-	diff = 0
+test_list = []
+value = 0.0
+c = 0
+up = True
+m = (262144/4)
+print(m)
+inc = 1
+file2 = open('haar_test.txt', 'w')
+file2.write(str(round(value,5))+'\n')
+while c != 262144:
+	if up:
+		test_list.append(round(value,5))
+		if value >= m-inc:
+			up = False
+			value -= inc
+		else:
+			value += inc
+	else:
+		test_list.append(round(value,5))
+		if value <= -m+inc:
+			up = True
+			value += inc
+		else:
+			value -= inc
+	file2.write(str(round(value,5))+'\n')
+	c += 1
+print(len(test_list))
