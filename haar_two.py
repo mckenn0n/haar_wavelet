@@ -13,14 +13,12 @@ def reduce_haar(list_to_reduce, diff_list):
 	for i in range(0,len(list_to_reduce),2):
 		if i == len(list_to_reduce)-1:
 			first.append(list_to_reduce[i]/2)
-			# print('made it', len(list_to_reduce)-1)
 			c += 1
 			second.append(list_to_reduce[i]-(list_to_reduce[i]/2))
 		else:
 			ave = (list_to_reduce[i]+list_to_reduce[i+1])/2
 			first.append(ave)
 			c += 1
-			# print(len(list_to_reduce), i)
 			if (list_to_reduce[i] - ave) == (ave -list_to_reduce[i+1]):
 				second.append((ave - list_to_reduce[i+1]))
 			else:
