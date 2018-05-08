@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-file = open('./data/haar18.txt', 'r')
+file = open('./data/haar20.txt', 'r')
 l = file.readlines()[:-261149-800]
 l = l[1:]
 l = [i.strip('\n\t') for i in l]
@@ -16,7 +16,7 @@ if len(original) != len(x):
 fig = plt.figure()
 plt.plot(x,original,'b')
 plt.plot(x,reconstructed,'g')
-fig.suptitle('Random Signal 18', fontsize=20)
+fig.suptitle('Random Signal 20', fontsize=20)
 plt.xlabel('Index', fontsize=12)
 plt.ylabel('Value', fontsize=12)
 plt.show()
