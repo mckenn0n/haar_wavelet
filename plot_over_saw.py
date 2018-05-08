@@ -13,6 +13,10 @@ for i in l:
 	reconstructed.append(float(i[1]))
 if len(original) != len(x):
 	print("Wrong")
+fig = plt.figure()
 plt.plot(x,original,'b')
 plt.plot(x,reconstructed,'g')
+fig.suptitle('Saw Tooth Signal 9', fontsize=20)
+plt.xlabel('Index', fontsize=12)
+plt.ylabel('Value', fontsize=12)
 plt.show()
