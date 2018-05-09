@@ -52,14 +52,14 @@ def remove_cof(diff_list, t):
 			cof_removed += 1
 	return diff_list
 
-for t in tqdm(range(0, 1)):
-	file1 = open('./data/haar_test_org.bin', 'wb') 
-	file2 = open('./data/haar_test_org.txt', 'w') 
-	test_list = [float(random.randint(0, 100)) for x in range(262144)]#2^18
+for t in tqdm(range(0, 21)):
+	file1 = open('./data/haar_1000_'+str(t)+'.bin', 'wb') 
+	file2 = open('./data/haar_1000_'+str(t)+'.txt', 'w') 
+	test_list = [float(random.randint(0, 1000)) for x in range(262144)]#2^18
 	# print(test_list)
 	test = reduce_haar(test_list, [])
 	test = list(test)
-	test[1] = remove_cof(test[1], 10000000) 
+	test[1] = remove_cof(test[1], t) 
 	# print('Result of reduction:', test[1])
 	for x in range(len(test[1])):
 		file1.write(bytearray(struct.pack('f',test[1][x])))
