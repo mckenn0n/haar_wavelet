@@ -1,0 +1,4 @@
+Block Size	File	Number of Hashes	Number of Unique Hashes
+2048	haar0	513	513
+2048	haar1	513	1025
+2048	haar5	513	

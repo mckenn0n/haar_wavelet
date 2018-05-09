@@ -1,0 +1,2 @@
+Block Size	File	Number of Hashes	Number of Unique Hashes
+64	haar0	16385	
