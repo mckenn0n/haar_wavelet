@@ -2,9 +2,9 @@ import os
 import signal
 import time
 import subprocess
-d_file = open('./dedup_data_three.txt', 'w') 
+d_file = open('./dedup_data_two.txt', 'w') 
 check = ['haar0', 'haar1', 'haar5', 'haar10', 'haar15', 'haar20', 'haar_sine_1', 'haar_sine_6', 'haar_sine_9', 'haar_test', 'haar_test_org']
-block_size = 2048
+block_size = 512
 d_file.write('Block Size\tFile\tNumber of Hashes\tNumber of Unique Hashes\n')
 while block_size < 262145:
 	for x in check:
@@ -12,7 +12,7 @@ while block_size < 262145:
 		name_list = []
 		hashes = []
 		c = 0
-		with open('../data/'+x+'.bin', 'rb') as file:
+		with open('../../data/'+x+'.bin', 'rb') as file:
 			while True:
 				file1 = open('./'+x+'_'+str(c)+'.bin', 'wb')
 				name_list.append(x+'_'+str(c)+'.bin')
