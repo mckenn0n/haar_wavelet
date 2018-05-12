@@ -1,5 +1,5 @@
 import math
-check = ['haar0', 'haar1', 'haar5', 'haar10', 'haar15', 'haar20', 'haar_sine_1', 'haar_sine_6', 'haar_sine_9', 'haar_test', 'haar_test_org']
+check = ['haar0', 'haar1', 'haar2', 'haar3', 'haar4', 'haar5', 'haar10', 'haar15', 'haar19', 'haar20', 'haar_sine_1', 'haar_sine_6', 'haar_sine_9', 'haar_test', 'haar_test_org']
 e_list = []
 for x in check:
 	file = open('./data/'+x+'.txt', 'r')
